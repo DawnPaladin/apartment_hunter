@@ -12,10 +12,8 @@ class Location < ApplicationRecord
 
   def lat_long
     json = maps_query
-    if json["status"] = "OK"
+    if json["status"] = "OK" && json["results"].length > 0
       [json["results"][0]["geometry"]["location"]["lat"], json["results"][0]["geometry"]["location"]["lng"]]
-    else
-      "Query failed"
     end
   end
 
