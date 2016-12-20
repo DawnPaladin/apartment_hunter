@@ -1,1 +1,27 @@
-<h1>Welcome to Apartment Hunter</h1>
+<h1>Apartment Hunter</h1>
+
+<%= form_for @location do |form| %>
+  <h2>New Location</h2>
+  <%= form.text_area :address, size: "60x3" %>
+  <%= form.submit "Add address" %>
+<% end %>
+
+<h2>Locations</h2>
+<table class="table">
+  <thead>
+    <tr>
+      <th>Address</th>
+      <th>Lat/long</th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @locations.each do |location| %>
+      <tr>
+        <td><%= location.address.gsub("\n", "<br>").html_safe %></td>
+        <td><%= location.lat_long %></td>
+        <td><%= button_to "Delete", location_path(location), method: :delete %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
