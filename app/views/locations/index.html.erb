@@ -11,8 +11,9 @@
   <thead>
     <tr>
       <th>City</th>
-      <th>Crime rate <small>(annual crimes per 100k)</small></th>
       <th>Median Earnings</th>
+      <th>Crime Rate <small>(annual crimes per 100k)</small></th>
+      <th>Population Rate of Change</th>
       <th></th>
     </tr>
   </thead>
@@ -20,8 +21,9 @@
     <% @locations.each do |location| %>
       <tr>
         <td><%= location.city_name %></td>
-        <td><%= number_with_delimiter(location.crime_rate) %></td>
         <td><%= number_to_currency(location.earnings, precision: 0) %></td>
+        <td><%= number_with_delimiter(location.crime_rate) %></td>
+        <td><%= number_to_percentage(location.pop_change) %></td>
         <td><%= button_to "Delete", location_path(location), method: :delete %></td>
       </tr>
     <% end %>

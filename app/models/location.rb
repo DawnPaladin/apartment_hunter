@@ -29,18 +29,8 @@ class Location < ApplicationRecord
     "https://api.opendatanetwork.com/data/v1/values?app_token=#{SOCRATA_APP_TOKEN}&variable=jobs.earnings.median_earnings&entity_id=#{self.city_id}"
   end
 
-  def all_crime
-    json = fetch_data(crime_data_url)
-    if json['error']
-      json['error']['message']
-    elsif json['data'].length > 0
-      rows = json['data']
-      rows.delete_at(0) # remove header row to enable sort
-      most_recent = rows.max_by do |row|
-        row[0]
-      end
-      most_recent[1].round
-    end
+  def pop_change_data_url
+    "https://api.opendatanetwork.com/data/v1/values?app_token=#{SOCRATA_APP_TOKEN}&variable=demographics.population.change&entity_id=#{self.city_id}"
   end
 
   def get_data(url)
@@ -53,7 +43,7 @@ class Location < ApplicationRecord
       most_recent = rows.max_by do |row|
         row[0]
       end
-      most_recent[1].round
+      most_recent[1]
     end
   end
 
@@ -67,11 +57,12 @@ class Location < ApplicationRecord
     end
   end
 
-  def calculate_crime_rate
+  def get_stats
     self.city_id = get_city_id
     self.crime_rate = get_data(crime_data_url)
     self.earnings = get_data(earnings_data_url)
+    self.pop_change = get_data(pop_change_data_url)
   end
-  before_validation :calculate_crime_rate
+  before_validation :get_stats
 
 end
