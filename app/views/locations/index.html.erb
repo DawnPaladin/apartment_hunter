@@ -11,8 +11,8 @@
   <thead>
     <tr>
       <th>City</th>
-      <th>City ID</th>
-      <th>Crime</th>
+      <th>Crime rate <small>(annual crimes per 100k)</small></th>
+      <th>Median Earnings</th>
       <th></th>
     </tr>
   </thead>
@@ -20,8 +20,8 @@
     <% @locations.each do |location| %>
       <tr>
         <td><%= location.city_name %></td>
-        <td><%= location.city_id %></td>
-        <td><%= location.crime_rate == 0 ? "" : location.crime_rate.html_safe %></td>
+        <td><%= number_with_delimiter(location.crime_rate) %></td>
+        <td><%= number_to_currency(location.earnings, precision: 0) %></td>
         <td><%= button_to "Delete", location_path(location), method: :delete %></td>
       </tr>
     <% end %>
