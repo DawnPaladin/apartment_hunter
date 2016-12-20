@@ -1,5 +1,6 @@
 class Location < ApplicationRecord
   validates :city_name, presence: true
+  validates :city_id, presence: { message: "not found in our database. Please enter a city and state in this format: Dallas, TX" }
 
   SOCRATA_APP_TOKEN = Rails.application.secrets.socrata_app_token
 
@@ -45,7 +46,7 @@ class Location < ApplicationRecord
   end
 
   def self.to_csv
-    attributes = %w{city}
+    attributes = %w{city_name crime_rate}
     CSV.generate(headers: true) do |csv|
       csv << attributes
       all.each do |city|

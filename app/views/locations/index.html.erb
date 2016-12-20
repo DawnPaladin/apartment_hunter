@@ -1,12 +1,12 @@
 <h1>Apartment Hunter</h1>
 
 <%= form_for @location do |form| %>
-  <h2>New City</h2>
-  <%= form.text_field :city_name %>
+  <h2>Enter a city and state</h2>
+  <%= form.text_field :city_name, placeholder: "Dallas, TX" %>
   <%= form.submit "Add city" %>
 <% end %>
 
-<h2>Locations</h2>
+<h2>Locations <%= link_to "Download as CSV", locations_path(format: :csv), class: "btn btn-primary pull-right" %></h2>
 <table class="table">
   <thead>
     <tr>
