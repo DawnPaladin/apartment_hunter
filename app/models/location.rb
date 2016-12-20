@@ -13,7 +13,7 @@ class Location < ApplicationRecord
   end
 
   def city_data_url
-    "https://api.opendatanetwork.com/data/v1/values?app_token=#{SOCRATA_APP_TOKEN}&format=google&variable=crime.fbi_ucr.rate&entity_id=#{city_id}&year=2014"
+    "https://api.opendatanetwork.com/data/v1/values?app_token=#{SOCRATA_APP_TOKEN}&variable=crime.fbi_ucr.rate&entity_id=#{city_id}&crime_type=All%20Crimes"
   end
 
   def city_data
@@ -24,10 +24,15 @@ class Location < ApplicationRecord
     json = city_data
     if json['error']
       json['error']['message']
-    elsif json['data']['rows'].length > 0
-      rows = json['data']['rows']
-      all_crimes_row = rows.select { |row| row['c'][0]['v'] == "All Crimes"}
-      all_crimes_row[0]['c'][1]['f']
+    elsif json['data'].length > 0
+      rows = json['data']
+      rows.delete_at(0) # remove header row to enable sort
+      most_recent = rows.max_by do |row|
+        row[0]
+      end
+      formatted_rate = most_recent[1].round
+      year = most_recent[0]
+      "#{formatted_rate} per 100,000 people (in #{year})"
     end
   end
 
