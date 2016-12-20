@@ -3,6 +3,11 @@ class LocationsController < ApplicationController
   def index
     @locations = Location.all
     @location = Location.new
+
+    respond_to do |format|
+      format.html
+      format.csv { send_data @locations.to_csv }
+    end
   end
 
   def create
