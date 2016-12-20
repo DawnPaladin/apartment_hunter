@@ -12,6 +12,7 @@
     <tr>
       <th>City</th>
       <th>City ID</th>
+      <th>Crime</th>
       <th></th>
     </tr>
   </thead>
@@ -20,6 +21,7 @@
       <tr>
         <td><%= location.city %></td>
         <td><%= location.city_id %></td>
+        <td><%= location.all_crime %></td>
         <td><%= button_to "Delete", location_path(location), method: :delete %></td>
       </tr>
     <% end %>

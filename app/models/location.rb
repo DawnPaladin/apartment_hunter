@@ -1,24 +1,7 @@
 class Location < ApplicationRecord
   validates :city, presence: true
 
-  API_KEY = Rails.application.secrets.google_maps_api_key
   SOCRATA_APP_TOKEN = Rails.application.secrets.socrata_app_token
-
-  def maps_query_url
-    address = URI.encode(self.address)
-    "https://maps.googleapis.com/maps/api/geocode/json?address=#{address}&key=#{API_KEY}"
-  end
-
-  def maps_query
-    HTTParty.get(maps_query_url)
-  end
-
-  def lat_long
-    json = maps_query
-    if json["status"] = "OK" && json["results"].length > 0
-      [json["results"][0]["geometry"]["location"]["lat"], json["results"][0]["geometry"]["location"]["lng"]]
-    end
-  end
 
   def city_id
     json = HTTParty.get("http://api.opendatanetwork.com/entity/v1?entity_name=#{URI.encode(self.city)}&app_token=#{SOCRATA_APP_TOKEN}")
@@ -26,6 +9,25 @@ class Location < ApplicationRecord
       json["entities"][0]["id"]
     else
       nil
+    end
+  end
+
+  def city_data_url
+    "https://api.opendatanetwork.com/data/v1/values?app_token=#{SOCRATA_APP_TOKEN}&format=google&variable=crime.fbi_ucr.rate&entity_id=#{city_id}&year=2014"
+  end
+
+  def city_data
+    HTTParty.get(city_data_url)
+  end
+
+  def all_crime
+    json = city_data
+    if json['error']
+      json['error']['message']
+    elsif json['data']['rows'].length > 0
+      rows = json['data']['rows']
+      all_crimes_row = rows.select { |row| row['c'][0]['v'] == "All Crimes"}
+      all_crimes_row[0]['c'][1]['f']
     end
   end
 
