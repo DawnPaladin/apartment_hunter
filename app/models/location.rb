@@ -32,7 +32,7 @@ class Location < ApplicationRecord
       end
       formatted_rate = most_recent[1].round
       year = most_recent[0]
-      "#{formatted_rate} per 100,000 people (in #{year})"
+      "#{formatted_rate} <small>per 100,000 people (in #{year})</small>".html_safe
     end
   end
 
