@@ -2,7 +2,7 @@
 
 <%= form_for @location do |form| %>
   <h2>New City</h2>
-  <%= form.text_field :city %>
+  <%= form.text_field :city_name %>
   <%= form.submit "Add city" %>
 <% end %>
 
@@ -19,9 +19,9 @@
   <tbody>
     <% @locations.each do |location| %>
       <tr>
-        <td><%= location.city %></td>
+        <td><%= location.city_name %></td>
         <td><%= location.city_id %></td>
-        <td><%= location.all_crime %></td>
+        <td><%= location.crime_rate == 0 ? "" : location.crime_rate.html_safe %></td>
         <td><%= button_to "Delete", location_path(location), method: :delete %></td>
       </tr>
     <% end %>
