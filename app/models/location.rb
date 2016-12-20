@@ -5,7 +5,8 @@ class Location < ApplicationRecord
 
   def city_id
     json = HTTParty.get("http://api.opendatanetwork.com/entity/v1?entity_name=#{URI.encode(self.city)}&app_token=#{SOCRATA_APP_TOKEN}")
-    if json["entities"].length > 0
+    logger.debug { "city_id json: #{json}"}
+    if json["entities"] && json["entities"].length > 0
       json["entities"][0]["id"]
     else
       nil
