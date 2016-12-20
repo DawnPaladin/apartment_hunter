@@ -1,25 +1,25 @@
 <h1>Apartment Hunter</h1>
 
 <%= form_for @location do |form| %>
-  <h2>New Location</h2>
-  <%= form.text_area :address, size: "60x3" %>
-  <%= form.submit "Add address" %>
+  <h2>New City</h2>
+  <%= form.text_field :city %>
+  <%= form.submit "Add city" %>
 <% end %>
 
 <h2>Locations</h2>
 <table class="table">
   <thead>
     <tr>
-      <th>Address</th>
-      <th>Lat/long</th>
+      <th>City</th>
+      <th>City ID</th>
       <th></th>
     </tr>
   </thead>
   <tbody>
     <% @locations.each do |location| %>
       <tr>
-        <td><%= location.address.gsub("\n", "<br>").html_safe %></td>
-        <td><%= location.lat_long %></td>
+        <td><%= location.city %></td>
+        <td><%= location.city_id %></td>
         <td><%= button_to "Delete", location_path(location), method: :delete %></td>
       </tr>
     <% end %>

@@ -10,7 +10,7 @@ class LocationsController < ApplicationController
     if @location.save
       flash[:success] = "Location created"
     else
-      flash[:warning] = @location.error.full_messages
+      flash[:warning] = @location.errors.full_messages
     end
     redirect_to root_path
   end
@@ -22,7 +22,7 @@ class LocationsController < ApplicationController
 
   private
     def strong_params
-      params.require(:location).permit(:address, :lat, :long)
+      params.require(:location).permit(:city)
     end
 
 end

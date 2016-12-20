@@ -9,6 +9,9 @@
   </head>
 
   <body>
+    <% flash.each do |type, msg| %>
+      <%= content_tag(:div, join_messages(msg), class: "alert alert-#{type}") %>
+    <% end %>
     <%= yield %>
   </body>
 </html>
