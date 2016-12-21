@@ -1,24 +1,7 @@
-# README
+# City Stats
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+Considering various places you might move to? This tool can help.
 
-Things you may want to cover:
+This app uses the [Open Data Network](https://www.opendatanetwork.com/) to look up statistics about various cities. You can compare any number of cities and download your data as a CSV. Once you have your CSV, you can set up color scales and take notes on the various cities.
 
-* Ruby version
-
-* System dependencies
-
-* Configuration
-
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+[GitHub](https://github.com/DawnPaladin/apartment_hunter) / [Heroku](http://evening-savannah-75702.herokuapp.com/)
